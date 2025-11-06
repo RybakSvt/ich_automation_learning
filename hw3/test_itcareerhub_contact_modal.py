@@ -6,13 +6,13 @@ import pytest
 @pytest.fixture
 def driver():
     driver = webdriver.Chrome()
+    driver.get("https://itcareerhub.de/ru/contact-us#popup-close")
     yield driver
     driver.quit()
 
 
 
 def test_text_displayed(driver):
-    driver.get("https://itcareerhub.de/ru/contact-us#popup-close")
 
     # 1. Найти и кликнуть по иконке телефонной трубки
     phone_icon = driver.find_element(
