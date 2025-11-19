@@ -37,7 +37,10 @@ def test_drag_and_drop_with_popups(driver):
 
     actions = ActionChains(driver)
     actions.drag_and_drop(source, target).perform()
-    sleep(3)
+    #sleep(3)
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "#trash ul li"))
+    )
 
     remaining_photos = driver.find_elements(By.CSS_SELECTOR, "ul#gallery li")
     trash_photos = driver.find_elements(By.CSS_SELECTOR, "#trash ul li")
