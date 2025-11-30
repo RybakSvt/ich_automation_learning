@@ -1,7 +1,6 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from time import sleep
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -19,8 +18,11 @@ def test_text_in_iframe(driver):
     iframe = driver.find_element(By.TAG_NAME, "iframe")
     driver.switch_to.frame(iframe)
 
+    # Ждем появления body в iframe
+    wait = WebDriverWait(driver, 10)
+    body = wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+
     # Получаем весь текст body
-    body = driver.find_element(By.TAG_NAME, "body")
     full_text = body.text
 
     # Проверяем что body отображается и содержит нужный текст
@@ -30,7 +32,6 @@ def test_text_in_iframe(driver):
     assert target_text in full_text, f"Текст '{target_text}' не найден в содержимом iframe"
 
     print("Текст успешно найден и отображается в iframe.")
-
 
 # Текст находится в iframe, но он разбит на несколько элементов, поэтому поиск по всему
 # содержимому работает, а поиск по отдельным элементам - нет. Body содержит весь видимый
